@@ -1,9 +1,9 @@
 package main
 
 import (
-    "net/http"
-
     "github.com/gin-gonic/gin"
+    "log"
+    "net/http"
 )
 
 func getPing(context *gin.Context) {
@@ -17,7 +17,9 @@ func getPing(context *gin.Context) {
 
 func main() {
     engine := gin.Default()
-
+    gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
+        log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
+    }
     engine.GET("/ping", getPing)
 
     engine.Run()
